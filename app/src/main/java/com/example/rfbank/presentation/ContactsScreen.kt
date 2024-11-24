@@ -54,10 +54,6 @@ fun ContactsScreen(
             }
     }
 
-    LaunchedEffect(Unit) {
-        contactsViewModel.fetchData()
-    }
-
     Scaffold(topBar = {
         ContactsTopBar()
     }, containerColor = RFGray) { innerPadding ->
