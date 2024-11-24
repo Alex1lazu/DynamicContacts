@@ -12,7 +12,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -20,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.rfbank.components.ContactsTopBar
 import com.example.rfbank.components.EditButton
 import com.example.rfbank.components.UserEntry
@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.map
 fun ContactsScreen(
     contactsViewModel: ContactsViewModel = hiltViewModel()
 ) {
-    val state by contactsViewModel.state.collectAsState()
+    val state by contactsViewModel.state.collectAsStateWithLifecycle()
     val lazyListState = rememberLazyListState()
 
     LaunchedEffect(lazyListState) {
@@ -49,7 +49,7 @@ fun ContactsScreen(
             .distinctUntilChanged()
             .collect { isEmptyOrReachedEnd ->
                 if (isEmptyOrReachedEnd) {
-                    contactsViewModel.fetchData()
+                    contactsViewModel.fetchUsers()
                 }
             }
     }

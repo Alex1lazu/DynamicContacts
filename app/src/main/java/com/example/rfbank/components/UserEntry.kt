@@ -14,11 +14,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.rfbank.R
 import com.example.rfbank.model.User
@@ -34,25 +36,31 @@ fun UserEntry(user: User) {
                     .size(64.dp)
                     .clip(CircleShape)
             )
-            Column(Modifier.padding(horizontal = 16.dp)) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.Start,
                 ) {
                     Text(
                         text = user.name.last + " " + user.name.first,
-                        color = Color.Gray
+                        color = Color.Gray,
+                        fontSize = 22.sp
                     )
-                    Text("15:38", color = Color.Gray)
-                }
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
                     Text(
                         text = user.registered.age.toString() + " years from " + user.nat,
-                        color = Color.Gray
+                        color = Color.Gray,
                     )
+                }
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+
+                    // TODO: retrieve actual date instead of hardcoding it here
+                    Text("15:38", color = Color.Gray, fontSize = 12.sp)
                     IconButton(onClick = { }) {
                         Icon(
                             painter = painterResource(R.drawable.star),
@@ -65,7 +73,7 @@ fun UserEntry(user: User) {
             }
         }
         HorizontalDivider(
-            modifier = Modifier.fillMaxSize(), color = Color.LightGray
+            modifier = Modifier.fillMaxSize(), color = Color.LightGray, thickness = 3.dp
         )
     }
 }

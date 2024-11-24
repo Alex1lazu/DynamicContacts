@@ -29,7 +29,7 @@ class UserRepository @Inject constructor(
     private val _users = MutableStateFlow(emptyList<User>())
     val users = _users.asStateFlow()
     private val scope = CoroutineScope(dispatchers.IO)
-    private val nextPage = 0
+    private var nextPage = 0
 
     fun fetchUsers() = scope.launch {
         val response: HttpResponse =
@@ -37,7 +37,7 @@ class UserRepository @Inject constructor(
                 method = HttpMethod.Get
                 contentType(ContentType.Application.Json)
             }
-        nextPage.inc()
+        nextPage += 1
         parseJson(response.bodyAsText())
     }
 

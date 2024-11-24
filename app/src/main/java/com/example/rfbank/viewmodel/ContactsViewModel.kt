@@ -4,20 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rfbank.data.UserRepository
 import com.example.rfbank.model.ContactsState
-import com.example.rfbank.model.Response
-import com.example.rfbank.utils.json
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.ktor.client.HttpClient
-import io.ktor.client.request.request
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.bodyAsText
-import io.ktor.http.ContentType
-import io.ktor.http.HttpMethod
-import io.ktor.http.contentType
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.NonCancellable.invokeOnCompletion
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -32,7 +20,7 @@ class ContactsViewModel @Inject constructor(
     private val _state = MutableStateFlow(ContactsState())
     val state = _state.asStateFlow()
 
-    private var fetchDataJob: Job? = null
+    private var fetchUsersJob: Job? = null
 
     init {
         viewModelScope.launch {
@@ -42,13 +30,13 @@ class ContactsViewModel @Inject constructor(
         }
     }
 
-    fun fetchData() {
-        if (fetchDataJob?.isActive == true) return
+    fun fetchUsers() {
+        if (fetchUsersJob?.isActive == true) return
 
         _state.update { it.copy(isLoadingUsers = true) }
-        fetchDataJob = userRepository.fetchUsers().also {
+        fetchUsersJob = userRepository.fetchUsers().also {
             it.invokeOnCompletion {
-                fetchDataJob?.invokeOnCompletion {
+                fetchUsersJob?.invokeOnCompletion {
                     _state.update { it.copy(isLoadingUsers = false) }
                 }
             }
