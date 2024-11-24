@@ -36,9 +36,7 @@ class ContactsViewModel @Inject constructor(
         _state.update { it.copy(isLoadingUsers = true) }
         fetchUsersJob = userRepository.fetchUsers().also {
             it.invokeOnCompletion {
-                fetchUsersJob?.invokeOnCompletion {
-                    _state.update { it.copy(isLoadingUsers = false) }
-                }
+                _state.update { it.copy(isLoadingUsers = false) }
             }
         }
     }
