@@ -15,3 +15,11 @@ The app follows a **clean architecture** with a MVVM approach with a clear separ
 - **ViewModel Layer**: Manages the UI-related data and acts as a mediator between the UI and the repository.
 - **Data Layer**: Handles data fetching from the remote API and local storage, abstracted by repositories.
 
+## Directories
+- **components**: Contains UI components 
+- **data**: Manages User related data in the UserRepository
+- **presentation**: Contains the App's Screen, displaying a list of user fetched from backend
+- **ui**: Compose Theme-related files
+- **utils**: Contains internal utils meant to be used across the whole project, such as a Json object
+- **viewmodel**: Contains the App's viewModel, maintaining responsive commands
+- 
